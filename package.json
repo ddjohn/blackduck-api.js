@@ -1,0 +1,30 @@
+{
+  "name": "blackduck-api",
+  "version": "1.0.0",
+  "description": "Bluck Duck API for Node",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "mocha",
+    "example": "node example.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ddjohn/blackduck-api.js.git"
+  },
+  "keywords": [
+    "BlackDuck",
+    "Vulnerability"
+  ],
+  "author": "David Johansson <ddjohn@gmail.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ddjohn/blackduck-api.js/issues"
+  },
+  "homepage": "https://github.com/ddjohn/blackduck-api.js#readme",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "got": "^11.3.0",
+    "mocha": "^8.0.1"
+  }
+}
