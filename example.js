@@ -10,6 +10,9 @@ const bd = new BlackDuckAPI(API_URL, API_TOKEN);
 
 bd.getBearer().then((bearer) => {
 
+    /*
+     * Parent project
+     */
     bd.getProjects('name:AOSP_Binary_Scan').then((projects) => {
         BlackDuckReports.projectsReport(projects);
 
@@ -17,11 +20,30 @@ bd.getBearer().then((bearer) => {
             BlackDuckReports.versionsReport(versions);
 
             bd.getComponents(versions[0], '').then((components) => {
-                BlackDuckReports.componentsReport(components);
+                BlackDuckReports.componentReport(components[0]);
+            });
+ 
+            bd.getBomComponents(versions[0], '').then((components) => {
+                //BlackDuckReports.bomComponentReport(components[0]);
+            });
+        });
+    });
 
-                components.forEach(component => {
-                    //BlackDuckReports.componentsReport(component);
-                });
+    /*
+     * Child project
+     */
+    bd.getProjects('name:binary_gtt_hydra_product').then((projects) => {
+        BlackDuckReports.projectsReport(projects);
+
+        bd.getVersions(projects[0], 'versioName:default').then((versions) =>  {
+            BlackDuckReports.versionsReport(versions);
+
+            bd.getComponents(versions[0], '').then((components) => {
+                BlackDuckReports.componentReport(components[0]);
+            });
+
+            bd.getBomComponents(versions[0], '').then((components) => {
+                BlackDuckReports.bomComponentReport(components[0]);
             });
         });
     });
