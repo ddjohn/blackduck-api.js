@@ -84,7 +84,7 @@ export class BlackDuckAPI {
 
 export class BlackDuckReports {
 	
-	static projectReports(projects) {
+	static projectsReport(projects) {
 		projects.forEach((project) => {
 			this.projectReport(project);
 		});
@@ -94,13 +94,13 @@ export class BlackDuckReports {
 		console.log('project>', project.name.padEnd(40), project.createdAt.padEnd(30), project.createdBy.padEnd(10));
 	}
 
-	static projectVersions(versions) {
+	static versionsReport(versions) {
 		versions.forEach((version) => {
-			this.versionReport(vresion);
+			this.versionReport(version);
 		});
 	}
 
-    static projectVersion(version) {
+    static versionReport(version) {
 		console.log('version>', version.versionName.padEnd(40), version.createdAt.padEnd(30), version.createdBy.padEnd(10), version.phase.padEnd(10));
 	}
 }
