@@ -79,6 +79,28 @@ Example:
     });
 ```
 
+## Quering bill-of-materia
+List BOM components
+> getBomComponents(version_object, filter))
+
+Filter:
+* empty - no filter, list all
+* componentName:component - search for a specific component 
+
+Example:
+
+```
+    bd.getProjects('name:someproject').then((projects) => {
+
+        bd.getVersions(projects[0], 'versioName:someversion').then((versions) =>  {
+
+            bd.getBomComponents(versions[0], '').then((components) => {
+                console.log(compoenents)
+            });
+        });
+    });
+```
+
 ## Report Helpers
 
 Some simpler reports are available to get started.
@@ -113,3 +135,9 @@ Print components:
 
 Print compoenent:
 > BlackDuckReports.componentReport(component);
+
+Print bill-of-materias:
+> BlackDuckReports.componentsBomReports(bomcomponents);
+
+Print bill-of-mateira:
+> BlackDuckReports.componentBomReport(bomcomponent);
