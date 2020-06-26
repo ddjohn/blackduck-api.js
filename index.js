@@ -35,6 +35,40 @@ export class BlackDuckAPI {
 		catch(error) {
 			log('error', error);
 		}
-	}
+    }
+    
+    async getProjects(query) {
+		try {
+			const result = await got.get(this._api + '/projects?limit=9999&q=' + query, {
+				headers: {
+					Authorization: 'Bearer ' + this._bearer,
+					Accept: 'application/vnd.blackducksoftware.project-detail-4+json'
+				},
+				https: {
+					rejectUnauthorized: false 
+				}
+			});
+
+			const json = JSON.parse(result.body);
+			log('projects', json.totalCount);
+
+			return json.items;
+		}
+		catch(error) {
+			log('error', error);
+		}
+    }
 }
 
+export class BlackDuckReports {
+	
+	static projectReports(projects) {
+		projects.forEach((project) => {
+			this.projectReport(project);
+		});
+	}
+
+	static projectReport(project) {
+		console.log('project>', project.name.padEnd(60), project.createdAt.padEnd(30), project.createdBy.padEnd(10));
+	}
+}
