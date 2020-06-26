@@ -39,7 +39,7 @@ bd.getBearer().then((bearer) => {
 
 ## Quering versions
 List versions
-> getVersions)
+> getVersions(project_object, filter))
 
 Filter:
 * empty - no filter, list all
@@ -55,6 +55,28 @@ Example:
         });
     });
 });
+```
+
+## Quering components
+List components
+> getComponents(version_object, filter))
+
+Filter:
+* empty - no filter, list all
+* componentName:component - search for a specific component 
+
+Example:
+
+```
+    bd.getProjects('name:someproject').then((projects) => {
+
+        bd.getVersions(projects[0], 'versioName:someversion').then((versions) =>  {
+
+            bd.getComponents(versions[0], '').then((components) => {
+                console.log(compoenents)
+            });
+        });
+    });
 ```
 
 ## Report Helpers
@@ -75,7 +97,19 @@ bd.getBearer().then((bearer) => {
 ```
 
 Print projects:
-> BlackDuckReports.projectReports(projects);
+> BlackDuckReports.projectsReports(projects);
 
 Print project:
 > BlackDuckReports.projectReport(project);
+
+Print versions:
+> BlackDuckReports.versionsReports(versions);
+
+Print version:
+> BlackDuckReports.versionReport(version);
+
+Print components:
+> BlackDuckReports.componentsReports(components);
+
+Print compoenent:
+> BlackDuckReports.componentReport(component);
