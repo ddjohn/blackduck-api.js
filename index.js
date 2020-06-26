@@ -58,6 +58,28 @@ export class BlackDuckAPI {
 			log('error', error);
 		}
     }
+
+    async getVersions(projectobject, query) {
+        try {
+            const result = await got.get(projectobject._meta.href + '/versions?limit=9999&q=' + query, {
+                headers: {
+                    Authorization: 'Bearer ' + this._bearer,
+                    Accept: 'application/vnd.blackducksoftware.project-detail-5+json'
+                },
+                https: {
+                    rejectUnauthorized: false 
+                }
+            });
+
+            const json = JSON.parse(result.body);
+			log('versions', json.totalCount);
+
+            return json.items;
+        }
+        catch(error) {
+            log('error', error);
+        }
+	}
 }
 
 export class BlackDuckReports {
@@ -69,6 +91,16 @@ export class BlackDuckReports {
 	}
 
 	static projectReport(project) {
-		console.log('project>', project.name.padEnd(60), project.createdAt.padEnd(30), project.createdBy.padEnd(10));
+		console.log('project>', project.name.padEnd(40), project.createdAt.padEnd(30), project.createdBy.padEnd(10));
+	}
+
+	static projectVersions(versions) {
+		versions.forEach((version) => {
+			this.versionReport(vresion);
+		});
+	}
+
+    static projectVersion(version) {
+		console.log('version>', version.versionName.padEnd(40), version.createdAt.padEnd(30), version.createdBy.padEnd(10), version.phase.padEnd(10));
 	}
 }

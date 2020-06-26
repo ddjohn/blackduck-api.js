@@ -10,8 +10,12 @@ const bd = new BlackDuckAPI(API_URL, API_TOKEN);
 
 bd.getBearer().then((bearer) => {
 
-    bd.getProjects('').then((projects) => {
-        BlackDuckReports.projectReports(projects);
+    bd.getProjects('name:AOSP_Binary_Scan').then((projects) => {
+        BlackDuckReports.projectReport(projects[0]);
+
+        bd.getVersions(projects[0], '').then((versions) =>  {
+            BlackDuckReports.projectVersion(versions[0]);
+        });
     });
 });
 

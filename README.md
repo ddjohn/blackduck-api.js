@@ -18,11 +18,11 @@ bd.getBearer().then((bearer) => {
 });
 ```
 ## Quering Projects
-List projects - filter
+List projects
 > getProjects(filter)
 
 Filter:
-* empty - no filter
+* empty - no filter, list all
 * name:project - search for a specific project 
 
 Example:
@@ -36,3 +36,46 @@ bd.getBearer().then((bearer) => {
     });
 });
 ```
+
+## Quering versions
+List versions
+> getVersions)
+
+Filter:
+* empty - no filter, list all
+* versionName:version - search for a specific version 
+
+Example:
+
+```
+    bd.getProjects('name:someproject').then((projects) => {
+
+        bd.getVersions(projects[0], '').then((versions) =>  {
+            console.log(versions);
+        });
+    });
+});
+```
+
+## Report Helpers
+
+Some simpler reports are available to get started.
+
+Example:
+```
+import { BlackDuckAPI, BlackDuckReports } from 'blackduck-api.js';
+
+const bd = new BlackDuckAPI(.., ...);
+
+bd.getBearer().then((bearer) => {
+    bd.getProjects('').then((projects) => {
+        BlackDuckReports.projectReports(projects);
+    });
+});
+```
+
+Print projects:
+> BlackDuckReports.projectReports(projects);
+
+Print project:
+> BlackDuckReports.projectReport(project);
