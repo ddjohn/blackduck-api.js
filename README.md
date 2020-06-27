@@ -1,6 +1,26 @@
 # bluckduck-api.js
 Bluck Duck API for Node
 
+## Using this package
+
+```
+$ mkdir test && cd test
+$ npm init
+$ vim package.json
+Add: "type":"module"
+$ npm install -s blackduck-api
+$ cat > test.js
+import { BlackDuckAPI, BlackDuckReports } from 'blackduck-api';
+const bd = new BlackDuckAPI('http://blackduck.company.com/api', 'your_api_token');
+bd.getBearer().then((bearer) => {
+	console.log(bearer);
+});
+CTRL+D
+$ node test.js                                 -- or --
+$ node --experimental-modules test.js          -- if you skipped the type:module step --
+
+```
+
 ## Authenticate to Black Duck Server
 
 Create a authentication token in the Black Duck server.
