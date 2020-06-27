@@ -26,7 +26,8 @@ describe('Bearer Test', () => {
     sandbox.stub(got, 'post').returns(json);
 
     const bd = new BlackDuckAPI(API_URL, API_TOKEN);
-    const bearer = bd.getBearer().then((bearer) => {
+
+    bd.getBearer().then((bearer) => {
       assert.ok(bearer);
       assert.strictEqual("Hello", bearer.bearerToken);
       done();
@@ -37,7 +38,8 @@ describe('Bearer Test', () => {
     sandbox.stub(got, 'post').throws();
 
     const bd = new BlackDuckAPI(API_URL, 'wrong_token');
-    const bearer = bd.getBearer().then((bearer) => {
+
+    bd.getBearer().then((bearer) => {
       assert.strictEqual(bearer, undefined);
       done();
     });

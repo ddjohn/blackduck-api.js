@@ -169,7 +169,7 @@ export class BlackDuckReports {
 	static bomComponentsReport(components) {
         console.log('      bom>', 'NAME'.padEnd(30), 'VERSION'.padEnd(30));
 		components.forEach((component) => {
-			this.componentReport(component);
+			this.bomComponentReport(component);
 		});
        console.log('       bom>', 'total:', components.length);
 	}
