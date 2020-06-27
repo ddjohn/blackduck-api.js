@@ -13,18 +13,14 @@ bd.getBearer().then((bearer) => {
     /*
      * Parent project
      */
-    bd.getProjects('name:AOSP_Binary_Scan').then((projects) => {
+    bd.getProjects('name:some_parent_project').then((projects) => {
         BlackDuckReports.projectsReport(projects);
 
-        bd.getVersions(projects[0], 'versioName:android_q').then((versions) =>  {
+        bd.getVersions(projects[0], 'versioName:some_version').then((versions) => {
             BlackDuckReports.versionsReport(versions);
 
             bd.getComponents(versions[0], '').then((components) => {
                 BlackDuckReports.componentReport(components[0]);
-            });
- 
-            bd.getBomComponents(versions[0], '').then((components) => {
-                //BlackDuckReports.bomComponentReport(components[0]);
             });
         });
     });
@@ -32,10 +28,10 @@ bd.getBearer().then((bearer) => {
     /*
      * Child project
      */
-    bd.getProjects('name:binary_gtt_hydra_product').then((projects) => {
+    bd.getProjects('name:some_child_project').then((projects) => {
         BlackDuckReports.projectsReport(projects);
 
-        bd.getVersions(projects[0], 'versioName:default').then((versions) =>  {
+        bd.getVersions(projects[0], 'versioName:some_version').then((versions) => {
             BlackDuckReports.versionsReport(versions);
 
             bd.getComponents(versions[0], '').then((components) => {

@@ -15,7 +15,7 @@ describe('Bearer Test', () => {
   beforeEach(() => {
     sandbox = sinon.createSandbox();
   });
-  
+
   afterEach(() => {
     sandbox.restore()
   });

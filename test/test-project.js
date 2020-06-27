@@ -15,7 +15,7 @@ describe('Projects Test', () => {
   beforeEach(() => {
     sandbox = sinon.createSandbox();
   });
-  
+
   afterEach(() => {
     sandbox.restore()
   });
@@ -30,9 +30,9 @@ describe('Projects Test', () => {
     bd.getProjects('').then((projects) => {
       assert.ok(projects);
 
-      projects.forEach((project)  => {
+      projects.forEach((project) => {
         assert.ok(project);
-        assert.ok(project.name); 
+        assert.ok(project.name);
       });
       done();
     });

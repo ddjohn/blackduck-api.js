@@ -15,7 +15,7 @@ describe('Versions Test', () => {
   beforeEach(() => {
     sandbox = sinon.createSandbox();
   });
-  
+
   afterEach(() => {
     sandbox.restore()
   });
@@ -33,9 +33,9 @@ describe('Versions Test', () => {
     bd.getComponents(project_object, '').then((versions) => {
       assert.ok(versions);
 
-      versions.forEach((version)  => {
+      versions.forEach((version) => {
         assert.ok(version);
-        assert.ok(version.versionName); 
+        assert.ok(version.versionName);
       });
       done();
     });

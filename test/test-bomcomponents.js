@@ -15,7 +15,7 @@ describe('Bill-of-material Test', () => {
   beforeEach(() => {
     sandbox = sinon.createSandbox();
   });
-  
+
   afterEach(() => {
     sandbox.restore()
   });
@@ -33,9 +33,9 @@ describe('Bill-of-material Test', () => {
     bd.getBomComponents(version_object, '').then((components) => {
       assert.ok(components);
 
-      components.forEach((component)  => {
+      components.forEach((component) => {
         assert.ok(component);
-        assert.ok(component.componentName); 
+        assert.ok(component.componentName);
       });
       done();
     });
