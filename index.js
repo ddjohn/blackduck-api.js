@@ -190,55 +190,60 @@ export class BlackDuckReports {
     }
 
     static componentsReport(components) {
-        console.log(' ======================================================================== ');
+        console.log(' ========================================================================================================= ');
         console.log(
             '|', format('total:' + components.length, 9), 
             '|', format('NAME', 40), 
-            '|', format('VERSION', 15), '|');
-        console.log('|------------------------------------------------------------------------|');
+            '|', format('VERSION', 15),
+            '|', format('LICENSE', 30), 
+            '|');
+        console.log('|---------------------------------------------------------------------------------------------------------|');
 
         components.forEach((component) => {
             this.componentReport(component);
         });
-        console.log(' ======================================================================== ');
+        console.log(' ========================================================================================================= ');
     }
 
     static componentReport(component) {
-        console.log(
+        component.licenses.forEach((license) => {
+            console.log(
             '|', format('component', 9), 
             '|', format(component.componentName, 40), 
             '|', format(component.componentVersionName, 15), 
+            '|', format(license.licenseDisplay, 30), 
             '|');
+        });
     }
 
     static bomComponentsReport(components) {
-        console.log(' ======================================================================== ');
+        console.log(' ======================================================================================================================= ');
         console.log(
             '|', format('total:' + components.length, 9), 
             '|', format('NAME', 40), 
-            '|', format('VERSION', 15), 
-            '|', format('LICENSE', 20), 
-            '|', format('VULNERABILITY', 10), 
+            '|', format('VERSION', 25), 
+            '|', format('VULNERABILITY', 15), 
             '|', format('SCORE', 5), 
-            '|', format('SEVERITY', 5),
+            '|', format('SEVERITY', 8),
             '|');
-            console.log(' ======================================================================== ');
+        
+        console.log(' ----------------------------------------------------------------------------------------------------------------------- ');
 
         components.forEach((component) => {
             this.bomComponentReport(component);
         });
+        console.log(' ======================================================================================================================= ');
+
     }
 
     static bomComponentReport(component) {
-        console.log(component);
         console.log(
             '|', format('bom', 9), 
             '|', format(component.componentName, 40), 
-            '|', format(component.componentVersionName, 15), 
-            '|', format(component.license.licenseDisplay, 20), 
-            '|', format(component.vulnerabilityWithRemediation.vulnerabilityName, 10), 
-            '|', format(component.vulnerabilityWithRemediation.overallScore, 5), 
-            '|', format(component.vulnerabilityWithRemediation.severity, 5),
+            '|', format(component.componentVersionName, 25), 
+            '|', format(component.vulnerabilityWithRemediation.vulnerabilityName, 15), 
+            '|', format('' + component.vulnerabilityWithRemediation.overallScore, 5), 
+            '|', format(component.vulnerabilityWithRemediation.severity, 8),
             '|');
-   }
+    }
 }
