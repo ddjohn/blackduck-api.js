@@ -126,53 +126,119 @@ export class BlackDuckAPI {
     }
 }
 
+function format(str, length) {
+    if(str.length > length) {
+        return str.substring(0, length-3) + '...';
+    }
+    else {
+        return str.padEnd(length);
+    }
+}
+
 export class BlackDuckReports {
 
     static projectsReport(projects) {
-        console.log('   project>', 'NAME'.padEnd(40), 'DATE'.padEnd(30), 'USER'.padEnd(10));
+        console.log(' =================================================================================================== ');
+        console.log(
+            '|', format('total:' + projects.length, 9), 
+            '|', format('NAME', 40), 
+            '|', format('DATE', 24), 
+            '|', format('USER', 15), 
+            '|');
+        console.log('|---------------------------------------------------------------------------------------------------|');
+
         projects.forEach((project) => {
             this.projectReport(project);
         });
-        console.log('  project>', 'total:', projects.length);
+        console.log(' =================================================================================================== ');
     }
 
     static projectReport(project) {
-        console.log('  project>', project.name.padEnd(40), project.createdAt.padEnd(30), project.createdBy.padEnd(10));
+        console.log(
+            '|', format('project', 9), 
+            '|', format(project.name, 40), 
+            '|', format(project.createdAt, 24), 
+            '|', format(project.createdBy, 15), 
+            '|');
     }
 
     static versionsReport(versions) {
-        console.log('  version>', 'NAME'.padEnd(40), 'DATE'.padEnd(30), 'USER'.padEnd(10), 'PHASE'.padEnd(10));
+        console.log(' ============================================================================================ ');
+        console.log(
+            '|', format('total:' + versions.length, 9), 
+            '|', format('NAME', 15), 
+            '|', format('DATE', 24), 
+            '|', format('USER', 15), 
+            '|', format('PHASE', 15), 
+            '|');
+        console.log('|--------------------------------------------------------------------------------------------|');
+
         versions.forEach((version) => {
             this.versionReport(version);
         });
-        console.log('  version>', 'total:', versions.length);
+        console.log(' ============================================================================================ ');
     }
 
     static versionReport(version) {
-        console.log('  version>', version.versionName.padEnd(40), version.createdAt.padEnd(30), version.createdBy.padEnd(10), version.phase.padEnd(10));
+        console.log(
+            '|', format('version', 9), 
+            '|', format(version.versionName, 15), 
+            '|', format(version.createdAt, 24), 
+            '|', format(version.createdBy, 15), 
+            '|', format(version.phase, 15), 
+            '|');
     }
 
     static componentsReport(components) {
-        console.log('component>', 'NAME'.padEnd(30), 'VERSION'.padEnd(30));
+        console.log(' ======================================================================== ');
+        console.log(
+            '|', format('total:' + components.length, 9), 
+            '|', format('NAME', 40), 
+            '|', format('VERSION', 15), '|');
+        console.log('|------------------------------------------------------------------------|');
+
         components.forEach((component) => {
             this.componentReport(component);
         });
-        console.log('components>', 'total:', components.length);
+        console.log(' ======================================================================== ');
     }
 
     static componentReport(component) {
-        console.log('component>', component.componentName.padEnd(30), component.componentVersionName.padEnd(30));
+        console.log(
+            '|', format('component', 9), 
+            '|', format(component.componentName, 40), 
+            '|', format(component.componentVersionName, 15), 
+            '|');
     }
 
     static bomComponentsReport(components) {
-        console.log('      bom>', 'NAME'.padEnd(30), 'VERSION'.padEnd(30));
+        console.log(' ======================================================================== ');
+        console.log(
+            '|', format('total:' + components.length, 9), 
+            '|', format('NAME', 40), 
+            '|', format('VERSION', 15), 
+            '|', format('LICENSE', 20), 
+            '|', format('VULNERABILITY', 10), 
+            '|', format('SCORE', 5), 
+            '|', format('SEVERITY', 5),
+            '|');
+            console.log(' ======================================================================== ');
+
         components.forEach((component) => {
             this.bomComponentReport(component);
         });
-        console.log('       bom>', 'total:', components.length);
     }
 
     static bomComponentReport(component) {
-        console.log('      bom>', component.componentName, component.componentVersionName, component.license.licenseDisplay, component.vulnerabilityWithRemediation.vulnerabilityName, component.vulnerabilityWithRemediation.overallScore, component.vulnerabilityWithRemediation.severity);
+        console.log(component);
+        console.log(
+            '|', format('bom', 9), 
+            '|', format(component.componentName, 40), 
+            '|', format(component.componentVersionName, 15), 
+            '|', format(component.license.licenseDisplay, 20), 
+            '|', format(component.vulnerabilityWithRemediation.vulnerabilityName, 10), 
+            '|', format(component.vulnerabilityWithRemediation.overallScore, 5), 
+            '|', format(component.vulnerabilityWithRemediation.severity, 5),
+            '|');
    }
 }
