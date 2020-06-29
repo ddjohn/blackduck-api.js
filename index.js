@@ -59,6 +59,28 @@ export class BlackDuckAPI {
         }
     }
 
+    async getRoles(filter) {
+        try {
+            const result = await got.get(this._api + '/roles?limit=9999&q=' + filter, {
+                headers: {
+                    Authorization: 'Bearer ' + this._bearer,
+                    Accept: 'application/vnd.blackducksoftware.user-4+json'
+                },
+                https: {
+                    rejectUnauthorized: false
+                }
+            });
+
+            const json = JSON.parse(result.body);
+            log('roles', json.totalCount);
+
+            return json.items;
+        }
+        catch (error) {
+            log('error', error);
+        }
+    }
+
     async getProjects(query) {
         try {
             const result = await got.get(this._api + '/projects?limit=9999&q=' + query, {
@@ -186,6 +208,30 @@ export class BlackDuckReports {
             '|');
     }
 
+    static rolesReport(roles) {
+        console.log(roles);
+
+        console.log(' ===================================================================================================================== ');
+        console.log(
+            '|', format('total:' + roles.length, 9), 
+            '|', format('NAME', 20), 
+            '|', format('DESCRIPTION', 80), 
+            '|');
+        console.log('|---------------------------------------------------------------------------------------------------------------------|');
+    
+        roles.forEach((role) => {
+            this.roleReport(role);
+        });
+        console.log(' ===================================================================================================================== ');
+    }
+
+    static roleReport(role) {
+        console.log(
+            '|', format('roles', 9), 
+            '|', format(role.name, 20), 
+            '|', format(role.description, 80), 
+            '|');
+    }
 
     static projectsReport(projects) {
         console.log(' =================================================================================================== ');
