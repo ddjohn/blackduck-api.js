@@ -37,6 +37,28 @@ export class BlackDuckAPI {
         }
     }
 
+    async getUsers(filter) {
+        try {
+            const result = await got.get(this._api + '/users?limit=9999&q=' + filter, {
+                headers: {
+                    Authorization: 'Bearer ' + this._bearer,
+                    Accept: 'application/vnd.blackducksoftware.user-4+json'
+                },
+                https: {
+                    rejectUnauthorized: false
+                }
+            });
+
+            const json = JSON.parse(result.body);
+            log('users', json.totalCount);
+
+            return json.items;
+        }
+        catch (error) {
+            log('error', error);
+        }
+    }
+
     async getProjects(query) {
         try {
             const result = await got.get(this._api + '/projects?limit=9999&q=' + query, {
@@ -137,6 +159,34 @@ function format(str, length) {
 
 export class BlackDuckReports {
 
+    static usersReport(users) {
+        console.log(' =========================================================================================================================== ');
+        console.log(
+            '|', format('total:' + users.length, 9), 
+            '|', format('NAME', 20), 
+            '|', format('FIRSTNAME', 20), 
+            '|', format('LASTNAME', 20), 
+            '|', format('EMAIL', 40), 
+            '|');
+        console.log('|---------------------------------------------------------------------------------------------------------------------------|');
+
+        users.forEach((user) => {
+            this.userReport(user);
+        });
+        console.log(' =========================================================================================================================== ');
+    }
+
+    static userReport(user) {
+        console.log(
+            '|', format('users', 9), 
+            '|', format(user.userName, 20), 
+            '|', format(user.firstName, 20), 
+            '|', format(user.lastName, 20), 
+            '|', format(user.email, 40), 
+            '|');
+    }
+
+
     static projectsReport(projects) {
         console.log(' =================================================================================================== ');
         console.log(
@@ -190,19 +240,19 @@ export class BlackDuckReports {
     }
 
     static componentsReport(components) {
-        console.log(' ========================================================================================================= ');
+        console.log(' ======================================================================================================================== ');
         console.log(
             '|', format('total:' + components.length, 9), 
             '|', format('NAME', 40), 
-            '|', format('VERSION', 15),
-            '|', format('LICENSE', 30), 
+            '|', format('VERSION', 20),
+            '|', format('LICENSE', 40), 
             '|');
-        console.log('|---------------------------------------------------------------------------------------------------------|');
+        console.log('|------------------------------------------------------------------------------------------------------------------------|');
 
         components.forEach((component) => {
             this.componentReport(component);
         });
-        console.log(' ========================================================================================================= ');
+	console.log(' ======================================================================================================================== ');
     }
 
     static componentReport(component) {
@@ -210,8 +260,8 @@ export class BlackDuckReports {
             console.log(
             '|', format('component', 9), 
             '|', format(component.componentName, 40), 
-            '|', format(component.componentVersionName, 15), 
-            '|', format(license.licenseDisplay, 30), 
+            '|', format(component.componentVersionName, 20), 
+            '|', format(license.licenseDisplay, 40), 
             '|');
         });
     }
