@@ -1,6 +1,6 @@
 {
   "name": "blackduck-api",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Bluck Duck API for Node",
   "main": "index.js",
   "type": "module",
