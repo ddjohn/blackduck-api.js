@@ -200,7 +200,7 @@ export class BlackDuckReports {
 
     static userReport(user) {
         console.log(
-            '|', format('users', 9), 
+            '|', format('user', 9), 
             '|', format(user.userName, 20), 
             '|', format(user.firstName, 20), 
             '|', format(user.lastName, 20), 
@@ -209,8 +209,6 @@ export class BlackDuckReports {
     }
 
     static rolesReport(roles) {
-        console.log(roles);
-
         console.log(' ===================================================================================================================== ');
         console.log(
             '|', format('total:' + roles.length, 9), 
@@ -227,7 +225,7 @@ export class BlackDuckReports {
 
     static roleReport(role) {
         console.log(
-            '|', format('roles', 9), 
+            '|', format('role', 9), 
             '|', format(role.name, 20), 
             '|', format(role.description, 80), 
             '|');

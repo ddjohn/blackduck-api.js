@@ -42,8 +42,8 @@ List projects
 > getProjects(filter)
 
 Filter:
-* empty - no filter, list all
-* name:project - search for a specific project 
+* empty filter: list all
+* available filters: name,projectTier,projectOwner 
 
 Example:
 
@@ -62,8 +62,8 @@ List versions
 > getVersions(project_object, filter))
 
 Filter:
-* empty - no filter, list all
-* versionName:version - search for a specific version 
+* empty filter: list all
+* available filters: versionName,nickname,phase  
 
 Example:
 
@@ -82,8 +82,8 @@ List components
 > getComponents(version_object, filter))
 
 Filter:
-* empty - no filter, list all
-* componentName:component - search for a specific component 
+* empty filter: list all
+* available filters: componentName,versionName 
 
 Example:
 
@@ -121,6 +121,44 @@ Example:
     });
 ```
 
+## Quering Users
+List users
+> getUsers(filter)
+
+Filter:
+* empty - no filter, list all
+
+Example:
+
+```
+...
+bd.getBearer().then((bearer) => {
+
+    bd.getUsers('').then((users) => {
+        console.log(users);
+    });
+});
+```
+
+## Quering Roles
+List roles
+> getRoles(filter)
+
+Filter:
+* empty - no filter, list all
+
+Example:
+
+```
+...
+bd.getBearer().then((bearer) => {
+
+    bd.getRoles('').then((roles) => {
+        console.log(roles);
+    });
+});
+```
+
 ## Report Helpers
 
 Some simpler reports are available to get started.
@@ -140,24 +178,65 @@ bd.getBearer().then((bearer) => {
 
 Print projects:
 > BlackDuckReports.projectsReports(projects);
-
-Print project:
-> BlackDuckReports.projectReport(project);
+```
+ =================================================================================================== 
+| total:1   | NAME                                     | DATE                     | USER            |
+|---------------------------------------------------------------------------------------------------|
+| project   | project1                                 | 2020-06-25T14:58:26.967Z | user10          |
+| project   | project2                                 | 2020-06-25T14:58:26.967Z | user10          |
+| project   | project3                                 | 2020-06-25T14:58:26.967Z | user11          |
+ =================================================================================================== 
+```
 
 Print versions:
 > BlackDuckReports.versionsReports(versions);
-
-Print version:
-> BlackDuckReports.versionReport(version);
+```
+ ============================================================================================ 
+| total:1   | NAME            | DATE                     | USER            | PHASE           |
+|--------------------------------------------------------------------------------------------|
+| version   | default         | 2020-06-25T14:58:26.969Z | user10          | DEVELOPMENT     |
+| version   | android         | 2020-06-25T14:58:26.969Z | user10          | DEVELOPMENT     |
+| version   | windows         | 2020-06-25T14:58:26.969Z | user11          | DEVELOPMENT     |
+| version   | default         | 2020-06-25T14:58:26.969Z | user12          | DEVELOPMENT     |
+ ============================================================================================ 
+```
 
 Print components:
 > BlackDuckReports.componentsReports(components);
+```
 
-Print compoenent:
-> BlackDuckReports.componentReport(component);
+```
+
 
 Print bill-of-materias:
 > BlackDuckReports.componentsBomReports(bomcomponents);
 
-Print bill-of-mateira:
-> BlackDuckReports.componentBomReport(bomcomponent);
+Print users:
+> BlackDuckReports.usersReports(users);
+```
+ =========================================================================================================================== 
+| total:9   | NAME                 | FIRSTNAME            | LASTNAME             | EMAIL                                    |
+|---------------------------------------------------------------------------------------------------------------------------|
+| users     | user10               | Peter                | Karlsson             | peter.karlsson@gmail.com                 |
+| users     | user11               | Sten                 | Nilsson              | sten.nilsson@gmail.com                   |
+| users     | user12               | Helge                | Pettersson           | helge.pettersson@gmail.com               |
+| users     | user13               | Alexandra            | Svensson             | alexandra.svensson@gmail.com             |
+ =========================================================================================================================== 
+```
+
+Print roles:
+> BlackDuckReports.rolesBomReports(roles);
+```
+ ===================================================================================================================== 
+| total:8   | NAME                 | DESCRIPTION                                                                      |
+|---------------------------------------------------------------------------------------------------------------------|
+| roles     | Component Manager    | This role can create, update and delete custom components.                       |
+| roles     | Global Code Scanner  | This user can run code scans and map them to any project.                        |
+| roles     | Global Project Vi... | This role has read only access to all projects.                                  |
+| roles     | License Manager      | Ability to create/modify/delete licenses.                                        |
+| roles     | Policy Manager       | Ability to create/modify/delete policies.                                        |
+| roles     | Project Creator      | This role can create projects/versions and edit their settings.                  |
+| roles     | Super User           | This role has access to all user and project data. This person can create/mod... |
+| roles     | System Administrator | This role will have access to system settings like the registration key, jobs... |
+ ===================================================================================================================== 
+```
