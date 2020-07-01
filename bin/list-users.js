@@ -1,5 +1,5 @@
 import debug from 'debug';
-const log = debug('list_users.js');
+const log = debug('list-users.js');
 
 log('loading...');
 
@@ -12,7 +12,7 @@ const bd = new BlackDuckAPI(API_URL, API_TOKEN);
 
 bd.getBearer().then((bearer) => {
 
-    bd.getUsers(args[0], args[1]).then((users) => {
+    bd.getUsers(args[0], '').then((users) => {
         BlackDuckReports.usersReport(users);
     });
 });

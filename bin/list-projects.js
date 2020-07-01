@@ -12,7 +12,7 @@ const bd = new BlackDuckAPI(API_URL, API_TOKEN);
 
 bd.getBearer().then((bearer) => {
 
-    bd.getProjects(args[0], args[1]).then((projects) => {
+    bd.getProjects(args[0], '').then((projects) => {
         BlackDuckReports.projectsReport(projects);
     });
 });

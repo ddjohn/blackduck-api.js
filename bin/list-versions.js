@@ -1,5 +1,5 @@
 import debug from 'debug';
-const log = debug('projects.js');
+const log = debug('list-versions.js');
 
 log('loading...');
 
@@ -12,15 +12,14 @@ const bd = new BlackDuckAPI(API_URL, API_TOKEN);
 
 bd.getBearer().then((bearer) => {
 
-    bd.getProjects(args[0]).then((projects) => {
+    bd.getProjects(args[0], '').then((projects) => {
 
-        bd.getVersions(projects[0], args[1]).then((versions) => {
+        if(projects.length !== 0) {
 
-            bd.getBomComponents(versions[0], '').then((components) => {
-                BlackDuckReports.bomComponentsReport(components);
+            bd.getVersions(projects[0], args[1]).then((versions) => {
+                BlackDuckReports.versionsReport(versions);
             });
-
-        });
+	}
 
     });
 });
