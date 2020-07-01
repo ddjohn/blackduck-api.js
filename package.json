@@ -1,6 +1,6 @@
 {
   "name": "blackduck-api",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Bluck Duck API for Node",
   "main": "index.js",
   "type": "module",
@@ -26,6 +26,7 @@
     "debug": "^4.1.1",
     "got": "^11.3.0",
     "mocha": "^8.0.1",
-    "sinon": "^9.0.2"
+    "sinon": "^9.0.2",
+    "smtp-client": "^0.3.1"
   }
 }

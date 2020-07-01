@@ -125,9 +125,9 @@ export class BlackDuckAPI {
         }
     }
 
-    async getComponents(version_object, query) {
+    async getComponents(version_object, query, filter) {
         try {
-            const result = await got.get(version_object._meta.href + '/components?limit=9999&q=' + query, {
+            const result = await got.get(version_object._meta.href + '/components?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.bill-of-materials-6+json'
@@ -166,6 +166,38 @@ export class BlackDuckAPI {
         }
         catch (error) {
             log('error', error);
+        }
+    }
+
+    deleteProject(project_object) {
+        this.deleteObject(project_object);
+    }
+
+    deleteVersion(version_object) {
+        this.deleteObject(version_object);
+    }
+
+    deleteComponent(component_object) {
+        this.deleteObject(component_object);
+    }
+
+    async deleteObject(object) {
+        try {
+            const result = await got.get(object._meta.href, {
+                headers: {
+                    Authorization: 'Bearer ' + this._bearer,
+                },
+                https: {
+                    rejectUnauthorized: false
+                }
+            });
+
+            log('delete', 'ok');
+            return true;
+        }
+        catch (error) {
+            log('error', error);
+            return false;
         }
     }
 }
@@ -327,7 +359,6 @@ export class BlackDuckReports {
             this.bomComponentReport(component);
         });
         console.log(' ======================================================================================================================= ');
-
     }
 
     static bomComponentReport(component) {
