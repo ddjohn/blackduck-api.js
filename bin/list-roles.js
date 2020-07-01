@@ -1,5 +1,5 @@
 import debug from 'debug';
-const log = debug('roles.js');
+const log = debug('list_roles.js');
 
 log('loading...');
 
@@ -12,7 +12,7 @@ const bd = new BlackDuckAPI(API_URL, API_TOKEN);
 
 bd.getBearer().then((bearer) => {
 
-    bd.getRoles(args[0]).then((roles) => {
+    bd.getRoles(args[0], args[1]).then((roles) => {
         BlackDuckReports.rolesReport(roles);
     });
 });

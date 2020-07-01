@@ -37,9 +37,9 @@ export class BlackDuckAPI {
         }
     }
 
-    async getUsers(filter) {
+    async getUsers(query, filter) {
         try {
-            const result = await got.get(this._api + '/users?limit=9999&q=' + filter, {
+            const result = await got.get(this._api + '/users?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.user-4+json'
@@ -59,9 +59,9 @@ export class BlackDuckAPI {
         }
     }
 
-    async getRoles(filter) {
+    async getRoles(query, filter) {
         try {
-            const result = await got.get(this._api + '/roles?limit=9999&q=' + filter, {
+            const result = await got.get(this._api + '/roles?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.user-4+json'
@@ -81,9 +81,9 @@ export class BlackDuckAPI {
         }
     }
 
-    async getProjects(query) {
+    async getProjects(query, filter) {
         try {
-            const result = await got.get(this._api + '/projects?limit=9999&q=' + query, {
+            const result = await got.get(this._api + '/projects?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.project-detail-4+json'
@@ -94,18 +94,23 @@ export class BlackDuckAPI {
             });
 
             const json = JSON.parse(result.body);
-            log('projects', json.totalCount);
-
-            return json.items;
+            if(json === undefined) {
+                log('projects', 0);
+                return [];
+            } else {
+                log('projects', json.totalCount);
+                return json.items;
+            }
         }
         catch (error) {
             log('error', error);
+            return null;
         }
     }
 
-    async getVersions(project_object, query) {
+    async getVersions(project_object, query, filter) {
         try {
-            const result = await got.get(project_object._meta.href + '/versions?limit=9999&q=' + query, {
+            const result = await got.get(project_object._meta.href + '/versions?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.project-detail-5+json'
@@ -116,9 +121,13 @@ export class BlackDuckAPI {
             });
 
             const json = JSON.parse(result.body);
-            log('versions', json.totalCount);
-
-            return json.items;
+            if(json === undefined) {
+                log('versions', 0);
+                return [];
+            } else {
+                log('versions', json.totalCount);
+                return json.items;
+            }
         }
         catch (error) {
             log('error', error);
@@ -138,18 +147,22 @@ export class BlackDuckAPI {
             });
 
             const json = JSON.parse(result.body);
-            log('components', json.totalCount);
-
-            return json.items;
+            if(json === undefined) {
+                log('components', 0);
+                return [];
+            } else {
+                log('components', json.totalCount);
+                return json.items;
+            }
         }
         catch (error) {
             log('error', error);
         }
     }
 
-    async getBomComponents(version_object, query) {
+    async getBomComponents(version_object, query, filter) {
         try {
-            const result = await got.get(version_object._meta.href + '/vulnerable-bom-components?limit=9999&q=' + query, {
+            const result = await got.get(version_object._meta.href + '/vulnerable-bom-components?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.bill-of-materials-6+json'
@@ -160,9 +173,13 @@ export class BlackDuckAPI {
             });
 
             const json = JSON.parse(result.body);
-            log('bomcomponents', json.totalCount);
-
-            return json.items;
+            if(json === undefined) {
+                log('bom', 0);
+                return [];
+            } else {
+                log('bom', json.totalCount);
+                return json.items;
+            }
         }
         catch (error) {
             log('error', error);
@@ -217,7 +234,7 @@ export class BlackDuckReports {
         console.log(' =========================================================================================================================== ');
         console.log(
             '|', format('total:' + users.length, 9), 
-            '|', format('NAME', 20), 
+            '|', format('USERNAME', 20), 
             '|', format('FIRSTNAME', 20), 
             '|', format('LASTNAME', 20), 
             '|', format('EMAIL', 40), 
