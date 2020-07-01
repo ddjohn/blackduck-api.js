@@ -37,6 +37,16 @@ bd.getBearer().then((bearer) => {
     log('Authenticated: ');
 });
 ```
+
+## General
+All APIs returns:
+* [[obj1}, ..., {objn}]] - query matched one or more objects
+* [] - query matched nothing
+* null - the request was rejected
+
+To get detailed debug messages set the following environment varianle:
+> $ export DEBUG=index.js
+
 ## Quering Projects
 List projects
 > getProjects(filter)

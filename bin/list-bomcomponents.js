@@ -1,5 +1,5 @@
 import debug from 'debug';
-const log = debug('projects.js');
+const log = debug('list-bomcomponents.js');
 
 log('loading...');
 
@@ -14,18 +14,18 @@ bd.getBearer().then((bearer) => {
 
     bd.getProjects(args[0], '').then((projects) => {
 
-        if(projects.length != 0) {
+        if (projects.length != 0) {
 
             bd.getVersions(projects[0], args[1], '').then((versions) => {
 
-                if(versions.length != 0) {
+                if (versions.length != 0) {
 
                     bd.getBomComponents(versions[0], args[2], '').then((components) => {
                         BlackDuckReports.bomComponentsReport(components);
                     });
-	        }
+                }
             });
-	}
+        }
     });
 });
 
