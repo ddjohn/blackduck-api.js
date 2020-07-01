@@ -1,9 +1,11 @@
 # bluckduck-api.js
 Black Duck API for Node
 
-## Using this package
+## Introduction
 
-```
+### Using this package
+
+```javascript
 $ mkdir test && cd test
 $ npm init
 $ vim package.json
@@ -21,7 +23,32 @@ $ node --experimental-modules test.js          -- if you skipped the type:module
 
 ```
 
-## Authenticate to Black Duck Server
+### What is supported?
+- [x] List users, roles, projects, versions, components and bomcomponents
+- [x] Create/delete of a project, version and component
+- [X] Simple reports for users, roles, projects, versions, components and bomcomponents
+
+
+## Porcelain API
+
+### Introduction
+This table is an overview on supported functionality:
+
+BlackDuck Type | Available Functions                                                     | Reports                                    |
+-------------- | ------------------------------------------------------------------------|--------------------------------------------|
+user           | users_object = listUsers(query, filter)                                 | usersReport(users_object)                  |
+role           | roles_object = listRoles(query, filter)                                 | rolesReport(roles_object)                  |
+project        | result = createProject(name)                                            |                                            |
+project        | result = deleteProject(name)                                            |                                            |
+project        | projects_object = listProjects(query, filter)                           | projectsReport(projects_object)            |
+version        | result = createVersion(project_object, name)                            |                                            |
+version        | result = deleteVersion(project_object, name)                            |                                            |
+version        | versions_object = listVersions(project_object, query, filter)           | versionsReport(versions_object)            |
+component      | components_object = listComponents(version_object, query, filter)       | componentssReport(components_object)       |
+bom            | bomcomponents_object = listBomComponents(version_object, query, filter) | bomComponentssReport(bomcomponents_object) |
+
+
+### Authenticate to Black Duck Server
 
 Create a authentication token in the Black Duck server.
 
@@ -29,7 +56,7 @@ Create a authentication token in the Black Duck server.
 
 Example:
 
-```
+```javascript
 import { BlackDuckAPI } from 'blackduck-api';
 
 const bd = new BlackDuckAPI("http://blackduck.company.com/api", "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef==");
@@ -38,7 +65,7 @@ bd.getBearer().then((bearer) => {
 });
 ```
 
-## General
+### General
 All APIs returns:
 * [[obj1}, ..., {objn}]] - query matched one or more objects
 * [] - query matched nothing
@@ -47,7 +74,7 @@ All APIs returns:
 To get detailed debug messages set the following environment varianle:
 > $ export DEBUG=index.js
 
-## Quering Projects
+### Quering Projects
 List projects
 > getProjects(filter)
 
@@ -57,7 +84,7 @@ Filter:
 
 Example:
 
-```
+```javascript
 ...
 bd.getBearer().then((bearer) => {
 
@@ -67,7 +94,7 @@ bd.getBearer().then((bearer) => {
 });
 ```
 
-## Quering versions
+### Quering versions
 List versions
 > getVersions(project_object, filter))
 
@@ -77,7 +104,7 @@ Filter:
 
 Example:
 
-```
+```javascript
     bd.getProjects('name:someproject').then((projects) => {
 
         bd.getVersions(projects[0], '').then((versions) =>  {
@@ -87,7 +114,7 @@ Example:
 });
 ```
 
-## Quering components
+### Quering components
 List components
 > getComponents(version_object, filter))
 
@@ -97,7 +124,7 @@ Filter:
 
 Example:
 
-```
+```javascript
     bd.getProjects('name:someproject').then((projects) => {
 
         bd.getVersions(projects[0], 'versioName:someversion').then((versions) =>  {
@@ -109,7 +136,7 @@ Example:
     });
 ```
 
-## Quering bill-of-materia
+### Quering bill-of-materia
 List BOM components
 > getBomComponents(version_object, filter))
 
@@ -119,7 +146,7 @@ Filter:
 
 Example:
 
-```
+```javascript
     bd.getProjects('name:someproject').then((projects) => {
 
         bd.getVersions(projects[0], 'versioName:someversion').then((versions) =>  {
@@ -131,7 +158,7 @@ Example:
     });
 ```
 
-## Quering Users
+### Quering Users
 List users
 > getUsers(filter)
 
@@ -141,7 +168,7 @@ Filter:
 Example:
 
 ```
-...
+...javascript
 bd.getBearer().then((bearer) => {
 
     bd.getUsers('').then((users) => {
@@ -150,7 +177,7 @@ bd.getBearer().then((bearer) => {
 });
 ```
 
-## Quering Roles
+### Quering Roles
 List roles
 > getRoles(filter)
 
@@ -159,7 +186,7 @@ Filter:
 
 Example:
 
-```
+```javascript
 ...
 bd.getBearer().then((bearer) => {
 
@@ -169,12 +196,12 @@ bd.getBearer().then((bearer) => {
 });
 ```
 
-## Report Helpers
+### Report Helpers
 
 Some simpler reports are available to get started.
 
 Example:
-```
+```javascript
 import { BlackDuckAPI, BlackDuckReports } from 'blackduck-api.js';
 
 const bd = new BlackDuckAPI(.., ...);
@@ -213,10 +240,6 @@ Print versions:
 
 Print components:
 > BlackDuckReports.componentsReports(components);
-```
-
-```
-
 
 Print bill-of-materias:
 > BlackDuckReports.componentsBomReports(bomcomponents);
