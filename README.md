@@ -24,7 +24,7 @@ $ node --experimental-modules test.js          -- if you skipped the type:module
 ```
 
 ### What is supported?
-- [x] List users, roles, projects, versions, components and bomcomponents
+- [x] List users, roles, projects, versions, components, bomcomponents and custom fields
 - [x] Create/delete of a project, version and component
 - [X] Simple reports for users, roles, projects, versions, components and bomcomponents
 
@@ -46,7 +46,7 @@ version        | result = deleteVersion(project_object, name)                   
 version        | versions_object = listVersions(project_object, query, filter)           | versionsReport(versions_object)            |
 component      | components_object = listComponents(version_object, query, filter)       | componentssReport(components_object)       |
 bom            | bomcomponents_object = listBomComponents(version_object, query, filter) | bomComponentssReport(bomcomponents_object) |
-
+customfield    | fileds_object = getCustomFields(project_object, query, filter)          |                                            |
 
 ### Authenticate to Black Duck Server
 

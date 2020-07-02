@@ -134,6 +134,32 @@ export class BlackDuckAPI {
         }
     }
 
+    async getCustomFields(project_object, query, filter) {
+        try {
+            const result = await got.get(project_object._meta.href + '/custom-fields', {
+                headers: {
+                    Authorization: 'Bearer ' + this._bearer,
+                    Accept: 'application/vnd.blackducksoftware.project-detail-5+json'
+                },
+                https: {
+                    rejectUnauthorized: false
+                }
+            });
+
+            const json = JSON.parse(result.body);
+            if(json === undefined) {
+                log('custom-fields', 0);
+                return [];
+            } else {
+                log('custom-fields', json.totalCount);
+                return json.items;
+            }
+        }
+        catch (error) {
+            log('error', error);
+        }
+    }
+
     async getComponents(version_object, query, filter) {
         try {
             const result = await got.get(version_object._meta.href + '/components?limit=9999&q=' + query + '&filter=' + filter, {
@@ -330,25 +356,25 @@ export class BlackDuckReports {
     }
 
     static projectsReport(projects) {
-        console.log(' =================================================================================================== ');
+        console.log(' ======================================================================================================================= ');
         console.log(
             '|', format('total:' + projects.length, 9), 
-            '|', format('NAME', 40), 
+            '|', format('NAME', 60), 
             '|', format('DATE', 24), 
             '|', format('USER', 15), 
             '|');
-        console.log('|---------------------------------------------------------------------------------------------------|');
+        console.log('|-----------------------------------------------------------------------------------------------------------------------|');
 
         projects.forEach((project) => {
             this.projectReport(project);
         });
-        console.log(' =================================================================================================== ');
+        console.log(' ======================================================================================================================= ');
     }
 
     static projectReport(project) {
         console.log(
             '|', format('project', 9), 
-            '|', format(project.name, 40), 
+            '|', format(project.name, 60), 
             '|', format(project.createdAt, 24), 
             '|', format(project.createdBy, 15), 
             '|');
