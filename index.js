@@ -226,7 +226,7 @@ export class BlackDuckAPI {
 
     async deleteObject(object) {
         try {
-            const result = await got.get(object._meta.href, {
+            const result = await got.delete(object._meta.href, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                 },
