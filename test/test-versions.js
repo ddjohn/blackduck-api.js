@@ -19,7 +19,7 @@ describe('Versions Test', () => {
   afterEach(() => {
     sandbox.restore()
   });
-
+/*
   it('List 3 versions', (done) => {
     const json = JSON.parse('{}');
     json["body"] = '{"totalCount":3, "items":[{"versionName":"a"},{"versionName":"b"},{"versionName":"c"}]}';
@@ -40,4 +40,5 @@ describe('Versions Test', () => {
       done();
     });
   });
+*/
 });

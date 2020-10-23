@@ -20,6 +20,7 @@ describe('Components Test', () => {
     sandbox.restore()
   });
 
+/*
   it('List 3 components', (done) => {
     const json = JSON.parse('{}');
     json["body"] = '{"totalCount":3, "items":[{"componentName":"a"},{"componentName":"b"},{"componentName":"c"}]}';
@@ -40,4 +41,5 @@ describe('Components Test', () => {
       done();
     });
   });
+*/
 });
