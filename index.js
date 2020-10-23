@@ -1,4 +1,5 @@
 import debug from 'debug';
+import lodash from 'lodash';
 const log = debug('index.js');
 
 log('loading...');
@@ -37,6 +38,9 @@ export class BlackDuckAPI {
         }
     }
 
+    /*
+     * TOP NODES
+     */
     async getUsers(query, filter) {
         try {
             const result = await got.get(this._api + '/users?limit=9999&q=' + query + '&filter=' + filter, {
@@ -82,8 +86,11 @@ export class BlackDuckAPI {
     }
 
     async getProjects(query, filter) {
+        let url = this._api + '/projects';
+        log('url', url);
+
         try {
-            const result = await got.get(this._api + '/projects?limit=9999&q=' + query + '&filter=' + filter, {
+            const result = await got.get(url + '?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.project-detail-4+json'
@@ -108,9 +115,15 @@ export class BlackDuckAPI {
         }
     }
 
+    /*
+     * PROJECT NODES
+     */
     async getVersions(project_object, query, filter) {
+        let url = lodash.filter(project_object._meta.links, x => x.rel == 'versions')[0].href;
+        log('url', url);
+
         try {
-            const result = await got.get(project_object._meta.href + '/versions?limit=9999&q=' + query + '&filter=' + filter, {
+            const result = await got.get(url + '?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.project-detail-5+json'
@@ -160,9 +173,15 @@ export class BlackDuckAPI {
         }
     }
 
+    /*
+     * VERSION NODE
+     */
     async getComponents(version_object, query, filter) {
+        let url = lodash.filter(version_object._meta.links, x => x.rel == 'components')[0].href;
+        log('url', url);
+
         try {
-            const result = await got.get(version_object._meta.href + '/components?limit=9999&q=' + query + '&filter=' + filter, {
+            const result = await got.get(url + '?limit=9999&q=' + query + '&filter=' + filter, {
                 headers: {
                     Authorization: 'Bearer ' + this._bearer,
                     Accept: 'application/vnd.blackducksoftware.bill-of-materials-6+json'
@@ -211,6 +230,42 @@ export class BlackDuckAPI {
             log('error', error);
         }
     }
+
+    /*
+     * COMPONENT NODES 
+     */
+    async getComments(component_object, query, filter) {
+        let url = lodash.filter(component_object._meta.links, x => x.rel == 'comments')[0].href;
+        log('url', url);
+
+        try {
+            const result = await got.get(url + '?limit=9999&q=' + query + '&filter=' + filter, {
+                headers: {
+                    Authorization: 'Bearer ' + this._bearer,
+                    Accept: 'application/vnd.blackducksoftware.bill-of-materials-6+json'
+                },
+                https: {
+                    rejectUnauthorized: false
+                }
+            });
+
+            const json = JSON.parse(result.body);
+            if(json === undefined) {
+                log('comments', 0);
+                return [];
+            } else {
+                log('comments', json.totalCount);
+                return json.items;
+            }
+        }
+        catch (error) {
+            log('error', error);
+        }
+    }
+
+    /*
+     * OPERATIONS
+     */
 
     deleteProject(project_object) {
         this.deleteObject(project_object);
