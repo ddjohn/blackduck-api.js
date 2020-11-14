@@ -40,7 +40,7 @@ describe('Bearer Test', () => {
     const bd = new BlackDuckAPI(API_URL, 'wrong_token');
 
     bd.getBearer().then((bearer) => {
-      assert.strictEqual(bearer, undefined);
+      assert.strictEqual(bearer, null);
       done();
     });
   });
