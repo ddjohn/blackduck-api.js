@@ -34,7 +34,8 @@ export class BlackDuckAPI {
             return json;
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -59,7 +60,8 @@ export class BlackDuckAPI {
             return json.items;
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -81,7 +83,8 @@ export class BlackDuckAPI {
             return json.items;
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -110,7 +113,7 @@ export class BlackDuckAPI {
             }
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
             return null;
         }
     }
@@ -143,7 +146,8 @@ export class BlackDuckAPI {
             }
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -169,13 +173,44 @@ export class BlackDuckAPI {
             }
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
+            return null;
         }
     }
 
     /*
      * VERSION NODE
      */
+    async getScans(version_object, query, filter) {
+        let url = lodash.filter(version_object._meta.links, x => x.rel == 'codelocations')[0].href;
+        log('url', url);
+
+        try {
+            const result = await got.get(url + '?limit=9999&q=' + query + '&filter=' + filter, {
+                headers: {
+                    Authorization: 'Bearer ' + this._bearer,
+                    Accept: 'application/vnd.blackducksoftware.scan-4+json;charset=UTF-8'
+                },
+                https: {
+                    rejectUnauthorized: false
+                }
+            });
+
+            const json = JSON.parse(result.body);
+            if(json === undefined) {
+                log('codelocations', 0);
+                return [];
+            } else {
+                log('codelocations', json.totalCount);
+                return json.items;
+            }
+        }
+        catch (error) {
+            console.log('error', error);
+            return null;
+        }
+    }
+
     async getComponents(version_object, query, filter) {
         let url = lodash.filter(version_object._meta.links, x => x.rel == 'components')[0].href;
         log('url', url);
@@ -201,7 +236,8 @@ export class BlackDuckAPI {
             }
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -227,7 +263,8 @@ export class BlackDuckAPI {
             }
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -259,7 +296,8 @@ export class BlackDuckAPI {
             }
         }
         catch (error) {
-            log('error', error);
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -294,8 +332,8 @@ export class BlackDuckAPI {
             return true;
         }
         catch (error) {
-            log('error', error);
-            return false;
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -319,8 +357,8 @@ export class BlackDuckAPI {
             return true;
         }
         catch (error) {
-            log('error', error);
-            return false;
+            console.log('error', error);
+            return null;
         }
     }
 
@@ -343,8 +381,8 @@ export class BlackDuckAPI {
             return true;
         }
         catch (error) {
-            log('error', error);
-            return false;
+            console.log('error', error);
+            return null;
         }
     }
 }
